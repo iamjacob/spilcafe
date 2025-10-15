@@ -1,0 +1,307 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+header {
+padding: 0px 20px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    background: rgb(255, 255, 255);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    padding: 17px;
+}
+
+.search {
+    display: flex;
+    justify-items: center;
+    gap: 4px;
+}
+
+.searchAndFilters {
+    padding: 8px;
+
+    /*web*/
+
+}
+
+.searchInput {
+    gap: 8px;
+    display: flex;
+    border-radius: 9px;
+    background-color: #ebebeb;
+    width: 100%;
+    align-items: center;
+}
+
+button,
+input {
+    all: unset;
+}
+
+button,
+.searchInput {
+    height: 43px;
+    border-radius: 8px;
+    padding: 0px 12px;
+    background-color: #ebebeb;
+
+}
+
+button svg,
+.searchInput svg {
+    height: 18px;
+    width: 18px;
+}
+
+.searchInput input {
+    font-family: "Inter", sans-serif;
+    flex: flex-grow;
+}
+
+h1 {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+}
+
+::placeholder {
+    font-size: 12px;
+    font-family: "Inter", sans-serif;
+    color: #000;
+}
+
+
+/*CARD COMPONENT*/
+
+main {
+    padding: 24px;
+    padding-top: 170px;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-around;
+}
+
+.card {
+    font-family: 'Inter', sans-serif;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    width: 169px;
+    height: 215px;
+    padding: 12px;
+    border-radius: 18px;
+    box-shadow: 1px 1px 1px 1px #00000025;
+}
+
+.card img {
+    width: 100%;
+    padding: 8px;
+    height: auto;
+}
+
+.card h2 {
+    width: 100%;
+    font: 'inter';
+    font-weight: bold;
+    text-align: left;
+    font-size: 16px;
+}
+
+.card__imageHolder {
+    width: 145px;
+    height: 145px;
+    border-radius: 12px;
+    background: #E3E3E3;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.card__rating {
+    height: 11px;
+    background: #878787;
+    border-radius: 9px;
+    font-size: 8px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    padding: 0 4px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #fff;
+}
+
+.card__rating svg {
+    margin-right: 4px;
+
+}
+
+.card__info {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    items-align: center;
+}
+
+.card__infoTAG {
+    font-size: 11px;
+    color: #6f6f6f;
+    display: flex;
+    align-items: center;
+}
+
+.card__infoTAG svg {
+    height: 11px;
+    width: 11px;
+    color: #6f6f6f;
+    margin-right: 4px;
+}
+
+/* Overlay + drawer */
+
+
+.overlay{
+	    font-family: "Inter", sans-serif;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 85vh;
+    background: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    position: fixed;
+    bottom: 0;
+    z-index: 110;
+    border-radius: 18px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.overlay__header{
+	padding:8px;
+}
+
+.topInfo{
+	display:flex;
+	padding:0px 33px;
+}
+
+.title{
+	margin:0px;
+	font-size:20px;
+}
+
+.gameinfo{
+	display:flex;
+	flex-direction:column;
+	justify-content:start;
+}
+
+.shortDesc{
+	font-size:12px;
+}
+
+.overlay__main{
+	
+}
+
+.overlay__main img{
+	width: 170px;
+	height:170px;
+}
+
+.drawer.open {
+	max-height: 800px; 
+}
+
+.drawer{
+	display:flex;
+	position:absolute;
+	border-radius:24px 24px 0px 0px;
+	background: #fff;
+	bottom:0px;
+	width:100%;
+	max-height: 166px;
+	flex-direction:column;
+	align-items:center;
+  transition: max-height 0.4s ease;
+	padding:8px;
+	box-shadow:4px 4px solid #00000025;
+}
+
+.drawHandle{
+	background: #BF171C;
+	height: 5px !important;
+	width: 48px;
+	border-radius:8px;
+	flex-shrink: 0; 
+}
+
+.drawer p{
+	padding:8px;
+	font-weight:100;
+	font-size:14px;
+	text-wrap:pretty;
+}
+
+.overlay .card__rating{
+	height:22px;
+	width: 50px;
+	background:#878787;
+	border-radius:9px;
+	font-size:16px;
+	position:absolute;
+	right:8px;
+	top:8px;
+	padding:0 4px;
+	display:flex;
+	justify-content:space-around;
+	align-items:center;
+	color:#fff;
+}
+
+.overlay .card__rating svg{
+	margin-right:4px;
+}
+
+.info{
+	padding:10px 55px;
+	height:fit-content;
+	display:flex;
+	flex-wrap: wrap;
+	justify-content:center;
+}
+
+.boks{
+	width:50%;
+	height:70px;
+	display:flex;
+	flex-direction:column;
+	font-weight:100;
+	font-size:14px;
+}
+
+.boks span{
+	padding-top:4px;
+	font-weight:500;
+	font-size:18px;
+}
