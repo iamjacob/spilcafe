@@ -132,49 +132,48 @@ function displayDrawer(id) {
   }
 
   drawHolder.innerHTML = `
-			<div class="overlay" id="overlay">
-				<div class="overlay__header">
-					<div class="close" onclick="closeDrawer()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-					<div class="card__rating">
-						<svg width="15" height="13" viewBox="0 0 8 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.06919 6.79995L2.66502 4.35969L0.666687 2.71837L3.30669 2.50127L4.33335 0.199951L5.36002 2.50127L8.00002 2.71837L6.00169 4.35969L6.59752 6.79995L4.33335 5.506L2.06919 6.79995Z" fill="#F2CE17"/></svg>
-						
-            
-           ${game.rating}
-
-            ${renderRatingStars(game.rating)}
-
-
-          
-
-					</div>
-				</div>
-				<div class="overlay__main">
-					<div class="topInfo">
-						<div class="gameinfo">
-							<div>
-								<div class="title"><h2>${game.title}</h2></div>
-								<div class="shortDesc">${game.description}</div>
-							</div>
-						</div>
-						<img src="${game.image}" alt="billede af ${game.title}">
-					</div>
-					<div class="info">
-						<div class="boks">Type: <span>${game.genre}</span></div>
-						<div class="boks">Sværhedsgrad: <span>${game.difficulty}</span></div>
-						<div class="boks">Spilletid: <span>${game.playtime} min</span></div>
-						<div class="boks">Antal spillere: <span>${game.players.min}-${
-    game.players.max
-  }</span></div>
-						<div class="boks">Alder: <span>+${game.age}</span></div>
-						<div class="boks">Hylde: <span>${game.shelf}</span></div>
-					</div>
-				</div>
-				<div class="drawer" onclick="toggleDrawer()">
-					<div class="drawHandle"></div>
-					<p>${game.rules}</p>
-				</div>
-			</div>
-		`;
+    <div class="overlay" id="overlay">
+      <div class="overlay__header">
+        <div class="close" onclick="closeDrawer()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="card__rating">
+          <svg width="15" height="13" viewBox="0 0 8 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.06919 6.79995L2.66502 4.35969L0.666687 2.71837L3.30669 2.50127L4.33335 0.199951L5.36002 2.50127L8.00002 2.71837L6.00169 4.35969L6.59752 6.79995L4.33335 5.506L2.06919 6.79995Z" fill="#F2CE17"/></svg>
+          ${game.rating}
+        </div>
+      </div>
+      <div class="overlay__main">
+        <div class="topInfo">
+          <div class="gameinfo">
+            <div>
+              <div class="title"><h2>${game.title}</h2></div>
+              <div class="shortDesc">${game.description}</div>
+            </div>
+          </div>
+          <img src="${game.image}" alt="billede af ${game.title}">
+        </div>
+        <div class="info">
+          <div class="boks">Type: <span>${game.genre}</span></div>
+          <div class="boks">Sværhedsgrad: <span>
+            ${renderRatingStars(game.difficulty === "Let" ? 2 : game.difficulty === "Mellem" ? 4 : 6)}
+          </span></div>
+          <div class="boks">Spilletid: <span>${game.playtime} min</span></div>
+          <div class="boks">Antal spillere: <span>${game.players.min}-${game.players.max}</span></div>
+          <div class="boks">Alder: <span>+${game.age}</span></div>
+          <div class="boks">Hylde: <span>${game.shelf}</span></div>
+        </div>
+      </div>
+      <div class="drawer" onclick="toggleDrawer()">
+        <div class="drawHandle"></div>
+        <p>${game.rules}</p>
+      </div>
+    </div>
+  `;
+  // Add overlay--active class after rendering for animation
+  setTimeout(() => {
+    const overlay = document.getElementById("overlay");
+    if (overlay) overlay.classList.add("overlay--active");
+  }, 10);
 }
 
 function renderRatingStars(rating) {
@@ -204,6 +203,11 @@ function renderRatingStars(rating) {
 <path d="M2.27778 0H14.7222C15.1937 0 15.6459 0.187301 15.9793 0.520699C16.3127 0.854097 16.5 1.30628 16.5 1.77778V14.2222C16.5 14.6937 16.3127 15.1459 15.9793 15.4793C15.6459 15.8127 15.1937 16 14.7222 16H2.27778C1.80628 16 1.3541 15.8127 1.0207 15.4793C0.687301 15.1459 0.5 14.6937 0.5 14.2222V1.77778C0.5 1.30628 0.687301 0.854097 1.0207 0.520699C1.3541 0.187301 1.80628 0 2.27778 0ZM4.05556 1.77778C3.58406 1.77778 3.13187 1.96508 2.79848 2.29848C2.46508 2.63187 2.27778 3.08406 2.27778 3.55556C2.27778 4.02705 2.46508 4.47924 2.79848 4.81263C3.13187 5.14603 3.58406 5.33333 4.05556 5.33333C4.52705 5.33333 4.97924 5.14603 5.31263 4.81263C5.64603 4.47924 5.83333 4.02705 5.83333 3.55556C5.83333 3.08406 5.64603 2.63187 5.31263 2.29848C4.97924 1.96508 4.52705 1.77778 4.05556 1.77778ZM12.9444 10.6667C12.4729 10.6667 12.0208 10.854 11.6874 11.1874C11.354 11.5208 11.1667 11.9729 11.1667 12.4444C11.1667 12.9159 11.354 13.3681 11.6874 13.7015C12.0208 14.0349 12.4729 14.2222 12.9444 14.2222C13.4159 14.2222 13.8681 14.0349 14.2015 13.7015C14.5349 13.3681 14.7222 12.9159 14.7222 12.4444C14.7222 11.9729 14.5349 11.5208 14.2015 11.1874C13.8681 10.854 13.4159 10.6667 12.9444 10.6667ZM12.9444 1.77778C12.4729 1.77778 12.0208 1.96508 11.6874 2.29848C11.354 2.63187 11.1667 3.08406 11.1667 3.55556C11.1667 4.02705 11.354 4.47924 11.6874 4.81263C12.0208 5.14603 12.4729 5.33333 12.9444 5.33333C13.4159 5.33333 13.8681 5.14603 14.2015 4.81263C14.5349 4.47924 14.7222 4.02705 14.7222 3.55556C14.7222 3.08406 14.5349 2.63187 14.2015 2.29848C13.8681 1.96508 13.4159 1.77778 12.9444 1.77778ZM4.05556 10.6667C3.58406 10.6667 3.13187 10.854 2.79848 11.1874C2.46508 11.5208 2.27778 11.9729 2.27778 12.4444C2.27778 12.9159 2.46508 13.3681 2.79848 13.7015C3.13187 14.0349 3.58406 14.2222 4.05556 14.2222C4.52705 14.2222 4.97924 14.0349 5.31263 13.7015C5.64603 13.3681 5.83333 12.9159 5.83333 12.4444C5.83333 11.9729 5.64603 11.5208 5.31263 11.1874C4.97924 10.854 4.52705 10.6667 4.05556 10.6667Z" fill="${
       rating >= 4 ? "black" : "#9F9F9F"
     }"/>
+            // Add overlay--active class after rendering for animation
+            setTimeout(() => {
+            const overlay = document.getElementById("overlay");
+            if (overlay) overlay.classList.add("overlay--active");
+            }, 10);
 </svg>
 
 
@@ -229,7 +233,14 @@ function renderRatingStars(rating) {
 
 function closeDrawer() {
   console.log("closeDrawer");
-  document.getElementById("overlay").style.transform = "translateY(75vh)";
+  const overlay = document.getElementById("overlay");
+  if (overlay) {
+    overlay.classList.remove("overlay--active");
+    // Remove overlay from DOM after transition
+    setTimeout(() => {
+      if (overlay.parentNode) overlay.parentNode.innerHTML = "";
+    }, 400); // match CSS transition duration
+  }
 }
 
 function filterGames() {
@@ -653,16 +664,22 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
   if (e.target.value.toLowerCase() == "maui") {
     const audio = new Audio("./assets/audio/maui.mp3");
     audio.play();
+  }else{
+    audio.pause();
   }
 
   if (e.target.value.toLowerCase() == "spaces") {
     const audio = new Audio("./assets/audio/spaces.mp3");
     audio.play();
+  }else{
+    audio.pause();
   }
 
   if (e.target.value.toLowerCase() == "shake") {
     const audio = new Audio("./assets/audio/shakeittothemax.mp3");
     audio.play();
+  }else{
+    audio.pause();
   }
 
   //plads til en sang mere??? :D
@@ -670,10 +687,10 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
   filterGames();
 });
 
-document.getElementById("locationButton").addEventListener("click", () => {
-  const dropdown = document.getElementById("locationDropdown");
-  dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
-});
+// document.getElementById("locationButton").addEventListener("click", () => {
+//   const dropdown = document.getElementById("locationDropdown");
+//   dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+// });
 
 // Add event listener for dropdown items
 const locationDropdown = document.getElementById("locationDropdown");

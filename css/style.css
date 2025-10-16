@@ -109,8 +109,14 @@ h1 {
     height: 32px;
     font-weight: 200;
     white-space: nowrap;
+    user-select: none;
+    outline: none;
 }
 
+/* Prevent focus outline on chips */
+.chip:focus {
+    outline: none;
+}
 .chip:hover {
     cursor: pointer;
     background: #FF4747;
@@ -232,9 +238,14 @@ main::after {
     bottom: 0;
     z-index: 110;
     border-radius: 18px;
-    transition: transform 0.3s ease-in-out;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Overlay active state for slide up animation */
+.overlay.overlay--active {
+    transform: translateY(0);
+}
 .overlay__header {
     padding: 8px;
 }
