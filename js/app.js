@@ -493,8 +493,9 @@ function handleMotion(e) {
     if (speed > SHAKE_THRESHOLD && curTime - lastShake > COOLDOWN) {
       lastShake = curTime;
       const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
-      displayDrawer(randomGame.id); // Use displayDrawer to show the game
+      showConfetti();
       shakeItToTheMax();
+      displayDrawer(randomGame.id); // Use displayDrawer to show the game
     }
 
     lastX = x;
@@ -604,6 +605,8 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
     const audio = new Audio("./assets/audio/shakeittothemax.mp3");
     audio.play();
   }
+
+  //plads til en sang mere??? :D
 
   filterGames();
 });
