@@ -147,7 +147,8 @@ main::after {
     flex-direction: column;
     align-items: center;
     background: #fff;
-    max-width: 169px;
+    /* max-width: 169px; */
+    width: 150px;
     height: 215px;
     padding: 12px;
     border-radius: 18px;
@@ -169,10 +170,10 @@ main::after {
 }
 
 .card__imageHolder {
-    width: 130px;
-    max-width: 145px;
-    height: 130px;
-    max-height: 145px;
+    width: 120px;
+    /* max-width: 145px; */
+    height: 120px;
+    /* max-height: 145px; */
     border-radius: 12px;
     background: #E3E3E3;
     display: flex;
@@ -247,7 +248,7 @@ main::after {
     transform: translateY(0);
 }
 .overlay__header {
-    padding: 8px;
+    padding: 13px;
 }
 
 .topInfo {
@@ -260,6 +261,10 @@ main::after {
 .title {
     margin: 0px;
     font-size: 20px;
+}
+
+.title h2, .shortDesc{
+    text-align: center;
 }
 
 .gameinfo {
@@ -280,7 +285,7 @@ main::after {
 }
 
 .drawer.open {
-    max-height: 800px;
+    max-height: 450PX;
 }
 
 .drawer {
@@ -320,8 +325,8 @@ main::after {
     border-radius: 9px;
     font-size: 16px;
     position: absolute;
-    right: 8px;
-    top: 8px;
+    right: 13px;
+    top: 13px;
     padding: 0 4px;
     display: flex;
     justify-content: space-around;
@@ -329,12 +334,30 @@ main::after {
     color: #fff;
 }
 
-.rating-dices{
+.rating-dices {
     display: flex;
     align-items: center;
     gap: 2px;
 }
 
+.rating-dices svg {
+    animation: roll-dice 0.6s cubic-bezier(0.4,0,0.2,1) forwards;
+    /* Each dice will get a different delay using nth-child */
+}
+
+.rating-dices svg:nth-child(1) { animation-delay: 0s; }
+.rating-dices svg:nth-child(2) { animation-delay: 0.1s; }
+.rating-dices svg:nth-child(3) { animation-delay: 0.2s; }
+.rating-dices svg:nth-child(4) { animation-delay: 0.3s; }
+.rating-dices svg:nth-child(5) { animation-delay: 0.4s; }
+.rating-dices svg:nth-child(6) { animation-delay: 0.5s; }
+
+@keyframes roll-dice {
+    0%   { transform: scale(1) rotate(0deg); opacity: 0.5; }
+    40%  { transform: scale(1.3) rotate(180deg); opacity: 1; }
+    80%  { transform: scale(0.9) rotate(270deg); opacity: 1; }
+    100% { transform: scale(1) rotate(360deg); opacity: 1; }
+}
 
 .overlay .card__rating svg {
     margin-right: 4px;

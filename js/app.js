@@ -176,6 +176,11 @@ function displayDrawer(id) {
   }, 10);
 }
 
+function toggleDrawer() {
+  const drawer = document.querySelector(".drawer");
+  if (drawer) drawer.classList.toggle("open");
+}
+
 function renderRatingStars(rating) {
   let starsHTML = '<div class="rating-dices">';
 
@@ -549,6 +554,7 @@ const SHAKE_THRESHOLD = 2000;
 const COOLDOWN = 1000;
 
 function handleMotion(e) {
+  console.log('init')
   const acc = e.accelerationIncludingGravity;
   const curTime = Date.now();
 
@@ -563,9 +569,8 @@ function handleMotion(e) {
     if (speed > SHAKE_THRESHOLD && curTime - lastShake > COOLDOWN) {
       lastShake = curTime;
       const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
-      // showConfetti();
-      startConfetti()
       shakeItToTheMax();
+      startConfetti()
       displayDrawer(randomGame.id); // Use displayDrawer to show the game
     }
 
