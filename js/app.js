@@ -67,21 +67,10 @@ async function getGames() {
   }
 }
 
- function closeShakeAndEnableMotion() {
-            closeShakePopup();
-            if (
-                typeof DeviceMotionEvent !== "undefined" &&
-                typeof DeviceMotionEvent.requestPermission === "function"
-            ) {
-                DeviceMotionEvent.requestPermission()
-                    .then((response) => {
-                        if (response === "granted") {
-                            window.addEventListener("devicemotion", handleMotion);
-                        }
-                    })
-                    .catch(console.error);
-            }
-        }
+function closeShakeAndEnableMotion() {
+  closeShakePopup();
+  enableShakeDetection();
+}
 
 // #3: Render all movies in the grid
 function displayGames(games) {
@@ -632,6 +621,8 @@ document.addEventListener("click", (e) => {
 
 // Only attach devicemotion after permission is granted (for iOS)
 function enableShakeDetection() {
+  // Remove any previous listeners to avoid duplicates
+  window.removeEventListener("devicemotion", handleMotion);
   if (
     typeof DeviceMotionEvent !== "undefined" &&
     typeof DeviceMotionEvent.requestPermission === "function"
