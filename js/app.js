@@ -560,7 +560,6 @@ const SHAKE_THRESHOLD = 2000;
 const COOLDOWN = 1000;
 
 window.handleMotion = function handleMotion(e) {
-  console.log('init')
   const acc = e.accelerationIncludingGravity;
   const curTime = Date.now();
 
@@ -574,6 +573,7 @@ window.handleMotion = function handleMotion(e) {
 
     if (speed > SHAKE_THRESHOLD && curTime - lastShake > COOLDOWN) {
       lastShake = curTime;
+      console.log('SHAKE DETECTED! speed:', speed);
       const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
       shakeItToTheMax();
       startConfetti()
@@ -621,23 +621,46 @@ document.addEventListener("click", (e) => {
 
 // Only attach devicemotion after permission is granted (for iOS)
 function enableShakeDetection() {
-  // Remove any previous listeners to avoid duplicates
+  console.log("🔧 Attempting to enable shake detection...");
+
+  // Always remove any old listeners first
   window.removeEventListener("devicemotion", handleMotion);
+
+  // ✅ iOS special case
   if (
     typeof DeviceMotionEvent !== "undefined" &&
     typeof DeviceMotionEvent.requestPermission === "function"
   ) {
+    // Must be triggered by user gesture
     DeviceMotionEvent.requestPermission()
       .then((response) => {
+        console.log("📱 Motion permission response:", response);
         if (response === "granted") {
-          window.addEventListener("devicemotion", handleMotion);
+          console.log("✅ Motion permission granted — shake enabled!");
+          window.addEventListener("devicemotion", handleMotion, true);
+        } else {
+          alert("⚠️ Du skal give tilladelse til bevægelse for at ryste!");
         }
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error("❌ Motion permission request failed:", err);
+      });
   } else {
-    window.addEventListener("devicemotion", handleMotion);
+    // Android or desktop
+    console.log("🟢 Non-iOS — motion enabled normally");
+    window.addEventListener("devicemotion", handleMotion, true);
   }
 }
+
+function closeShakeAndEnableMotion() {
+  closeShakePopup();
+
+  // Call directly from the button click (user gesture!)
+  setTimeout(() => {
+    enableShakeDetection();
+  }, 300);
+}
+
 
 // 🎉 Confetti effect — now in front of everything
 function startConfetti() {
