@@ -556,7 +556,7 @@ let lastX = 0,
   lastZ = 0;
 let lastUpdate = 0;
 let lastShake = 0;
-const SHAKE_THRESHOLD = 700;
+const SHAKE_THRESHOLD = 200;
 const COOLDOWN = 1000;
 
 window.handleMotion = function handleMotion(e) {
