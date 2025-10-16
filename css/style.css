@@ -240,6 +240,7 @@ main::after {
     bottom: 0;
     z-index: 110;
     border-radius: 18px;
+    box-shadow: 1px 1px 1px 1px #000000;
     transform: translateY(100%);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
