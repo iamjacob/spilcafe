@@ -67,6 +67,22 @@ async function getGames() {
   }
 }
 
+ function closeShakeAndEnableMotion() {
+            closeShakePopup();
+            if (
+                typeof DeviceMotionEvent !== "undefined" &&
+                typeof DeviceMotionEvent.requestPermission === "function"
+            ) {
+                DeviceMotionEvent.requestPermission()
+                    .then((response) => {
+                        if (response === "granted") {
+                            window.addEventListener("devicemotion", handleMotion);
+                        }
+                    })
+                    .catch(console.error);
+            }
+        }
+
 // #3: Render all movies in the grid
 function displayGames(games) {
   resultater.innerHTML = "";
