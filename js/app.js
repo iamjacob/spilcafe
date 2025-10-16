@@ -570,7 +570,7 @@ let lastShake = 0;
 const SHAKE_THRESHOLD = 2000;
 const COOLDOWN = 1000;
 
-function handleMotion(e) {
+window.handleMotion = function handleMotion(e) {
   console.log('init')
   const acc = e.accelerationIncludingGravity;
   const curTime = Date.now();
@@ -630,7 +630,23 @@ document.addEventListener("click", (e) => {
   if (e.target === overlay) overlay.style.display = "none";
 });
 
-window.addEventListener("devicemotion", handleMotion);
+// Only attach devicemotion after permission is granted (for iOS)
+function enableShakeDetection() {
+  if (
+    typeof DeviceMotionEvent !== "undefined" &&
+    typeof DeviceMotionEvent.requestPermission === "function"
+  ) {
+    DeviceMotionEvent.requestPermission()
+      .then((response) => {
+        if (response === "granted") {
+          window.addEventListener("devicemotion", handleMotion);
+        }
+      })
+      .catch(console.error);
+  } else {
+    window.addEventListener("devicemotion", handleMotion);
+  }
+}
 
 // 🎉 Confetti effect — now in front of everything
 function startConfetti() {
