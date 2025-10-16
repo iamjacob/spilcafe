@@ -667,26 +667,38 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
   console.log("first");
   selected.search = e.target.value;
 
+  // Pause all currently playing audios if not matching
+  const audios = document.querySelectorAll("audio");
+  audios.forEach(a => {
+    if (
+      (e.target.value.toLowerCase() !== "maui" && a.src.includes("maui.mp3")) ||
+      (e.target.value.toLowerCase() !== "spaces" && a.src.includes("spaces.mp3")) ||
+      (e.target.value.toLowerCase() !== "shake" && a.src.includes("shakeittothemax.mp3"))
+    ) {
+      a.pause();
+      a.currentTime = 0;
+    }
+  });
+
   if (e.target.value.toLowerCase() == "maui") {
     const audio = new Audio("./assets/audio/maui.mp3");
     audio.play();
-  }else{
-    audio.pause();
+    document.body.appendChild(audio);
   }
 
   if (e.target.value.toLowerCase() == "spaces") {
     const audio = new Audio("./assets/audio/spaces.mp3");
     audio.play();
-  }else{
-    audio.pause();
+    document.body.appendChild(audio);
   }
 
   if (e.target.value.toLowerCase() == "shake") {
     const audio = new Audio("./assets/audio/shakeittothemax.mp3");
     audio.play();
-  }else{
-    audio.pause();
+    document.body.appendChild(audio);
   }
+
+
 
   //plads til en sang mere??? :D
 
