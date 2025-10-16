@@ -561,7 +561,7 @@ const COOLDOWN = 1000;
 
 window.handleMotion = function handleMotion(e) {
   const acc = e.accelerationIncludingGravity;
-  if (!acc) return; // safety check
+  if (!acc) return;
 
   const curTime = Date.now();
 
@@ -573,17 +573,23 @@ window.handleMotion = function handleMotion(e) {
     const speed =
       (Math.abs(x + y + z - lastX - lastY - lastZ) / diffTime) * 10000;
 
-    // ✅ logs AFTER acc and speed exist
-    console.log(`📈 Motion: x=${x.toFixed(2)}, y=${y.toFixed(2)}, z=${z.toFixed(2)}`);
-    console.log(`⚡ speed=${speed.toFixed(1)}, threshold=${SHAKE_THRESHOLD}`);
+    console.log(`📈 x=${x.toFixed(2)}, y=${y.toFixed(2)}, z=${z.toFixed(2)} ⚡ speed=${speed.toFixed(1)}`);
 
     if (speed > SHAKE_THRESHOLD && curTime - lastShake > COOLDOWN) {
+      if (!allGames.length) {
+        console.warn("⚠️ No games loaded yet — ignoring shake");
+        return;
+      }
+
       lastShake = curTime;
       console.log("💥 SHAKE DETECTED! speed:", speed);
+
       const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
+
+      alert("Shake triggered!"); // quick test
       shakeItToTheMax();
       startConfetti();
-      displayDrawer(randomGame.id); // Use displayDrawer to show the game
+      displayDrawer(randomGame.id);
     }
 
     lastX = x;
