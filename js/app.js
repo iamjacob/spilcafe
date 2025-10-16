@@ -43,7 +43,7 @@ let allGames = []; // Declare allGames globally to access it in displayDrawer
 
 async function getGames() {
   try {
-    console.log("🌐 Henter alle spil fra JSON...");
+    // console.log("🌐 Henter alle spil fra JSON...");
     const response = await fetch(
       "https://raw.githubusercontent.com/cederdorff/race/refs/heads/master/data/games.json"
     );
@@ -53,11 +53,11 @@ async function getGames() {
     }
     allGames = await response.json();
     allGames;
-    console.log(`📊 JSON data modtaget: ${allGames.length} games`);
+    // console.log(`📊 JSON data modtaget: ${allGames.length} games`);
 
     // populateGenreDropdown();
     // filterMovies();
-    console.log(allGames);
+    // console.log(allGames);
 
     displayGames(allGames);
   } catch (error) {
@@ -560,6 +560,9 @@ const SHAKE_THRESHOLD = 700;
 const COOLDOWN = 1000;
 
 window.handleMotion = function handleMotion(e) {
+  console.log(`📈 Motion: x=${acc.x?.toFixed(2)}, y=${acc.y?.toFixed(2)}, z=${acc.z?.toFixed(2)}`);
+console.log(`⚡ speed=${speed.toFixed(1)}, threshold=${SHAKE_THRESHOLD}`);
+
   const acc = e.accelerationIncludingGravity;
   const curTime = Date.now();
 
@@ -622,9 +625,11 @@ document.addEventListener("click", (e) => {
 // Only attach devicemotion after permission is granted (for iOS)
 function enableShakeDetection() {
   console.log("🔧 Attempting to enable shake detection...");
+console.log("🟡 enableShakeDetection() called — waiting for permission check...");
 
   // Always remove any old listeners first
   window.removeEventListener("devicemotion", handleMotion);
+console.log("🟢 devicemotion listener added:", !!handleMotion);
 
   // ✅ iOS special case
   if (
@@ -634,6 +639,8 @@ function enableShakeDetection() {
     // Must be triggered by user gesture
     DeviceMotionEvent.requestPermission()
       .then((response) => {
+        console.log("🟢 DeviceMotionEvent.requestPermission() then() running...");
+
         console.log("📱 Motion permission response:", response);
         if (response === "granted") {
           console.log("✅ Motion permission granted — shake enabled!");
@@ -810,3 +817,37 @@ locationDropdown.addEventListener("click", (e) => {
   // Hide dropdown after selection
   locationDropdown.style.display = "none";
 });
+
+
+(function () {
+  // Create an on-screen log panel
+  const logDiv = document.createElement("div");
+  logDiv.id = "log";
+  logDiv.style.position = "fixed";
+  logDiv.style.bottom = "0";
+  logDiv.style.left = "0";
+  logDiv.style.right = "0";
+  logDiv.style.background = "rgba(0,0,0,0.7)";
+  logDiv.style.color = "lime";
+  logDiv.style.fontSize = "12px";
+  logDiv.style.padding = "5px";
+  logDiv.style.zIndex = "9999";
+  logDiv.style.maxHeight = "30vh";
+  logDiv.style.overflowY = "auto";
+  document.body.appendChild(logDiv);
+
+  // Keep original console.log
+  const originalLog = console.log;
+
+  // Overwrite it
+  console.log = function (...args) {
+    // Log to screen
+    logDiv.innerHTML += args.join(" ") + "<br>";
+    logDiv.scrollTop = logDiv.scrollHeight;
+
+    // Also log to real console (in case you connect Safari DevTools)
+    originalLog.apply(console, args);
+  };
+
+  console.error = console.warn = console.log; // optional: also capture warnings & errors
+})();
