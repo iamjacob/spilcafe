@@ -623,21 +623,20 @@ document.addEventListener("click", (e) => {
 function enableShakeDetection() {
   console.log("🔧 Attempting to enable shake detection...");
 
-  // Always remove any old listeners first
   window.removeEventListener("devicemotion", handleMotion);
 
-  // ✅ iOS special case
   if (
     typeof DeviceMotionEvent !== "undefined" &&
     typeof DeviceMotionEvent.requestPermission === "function"
   ) {
-    // Must be triggered by user gesture
+    // ⚠️ must be called directly by user tap
     DeviceMotionEvent.requestPermission()
       .then((response) => {
         console.log("📱 Motion permission response:", response);
         if (response === "granted") {
           console.log("✅ Motion permission granted — shake enabled!");
           window.addEventListener("devicemotion", handleMotion, true);
+          alert("✅ Motion access granted! Shake your phone now!");
         } else {
           alert("⚠️ Du skal give tilladelse til bevægelse for at ryste!");
         }
@@ -646,20 +645,17 @@ function enableShakeDetection() {
         console.error("❌ Motion permission request failed:", err);
       });
   } else {
-    // Android or desktop
     console.log("🟢 Non-iOS — motion enabled normally");
     window.addEventListener("devicemotion", handleMotion, true);
   }
 }
 
+// 🚫 Remove the timeout — must run directly from click
 function closeShakeAndEnableMotion() {
   closeShakePopup();
-
-  // Call directly from the button click (user gesture!)
-  setTimeout(() => {
-    enableShakeDetection();
-  }, 300);
+  enableShakeDetection(); // no delay!
 }
+
 
 
 // 🎉 Confetti effect — now in front of everything
