@@ -560,10 +560,9 @@ const SHAKE_THRESHOLD = 700;
 const COOLDOWN = 1000;
 
 window.handleMotion = function handleMotion(e) {
-  console.log(`📈 Motion: x=${acc.x?.toFixed(2)}, y=${acc.y?.toFixed(2)}, z=${acc.z?.toFixed(2)}`);
-console.log(`⚡ speed=${speed.toFixed(1)}, threshold=${SHAKE_THRESHOLD}`);
-
   const acc = e.accelerationIncludingGravity;
+  if (!acc) return; // safety check
+
   const curTime = Date.now();
 
   if (curTime - lastUpdate > 100) {
@@ -574,12 +573,16 @@ console.log(`⚡ speed=${speed.toFixed(1)}, threshold=${SHAKE_THRESHOLD}`);
     const speed =
       (Math.abs(x + y + z - lastX - lastY - lastZ) / diffTime) * 10000;
 
+    // ✅ logs AFTER acc and speed exist
+    console.log(`📈 Motion: x=${x.toFixed(2)}, y=${y.toFixed(2)}, z=${z.toFixed(2)}`);
+    console.log(`⚡ speed=${speed.toFixed(1)}, threshold=${SHAKE_THRESHOLD}`);
+
     if (speed > SHAKE_THRESHOLD && curTime - lastShake > COOLDOWN) {
       lastShake = curTime;
-      console.log('SHAKE DETECTED! speed:', speed);
+      console.log("💥 SHAKE DETECTED! speed:", speed);
       const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
       shakeItToTheMax();
-      startConfetti()
+      startConfetti();
       displayDrawer(randomGame.id); // Use displayDrawer to show the game
     }
 
@@ -587,7 +590,8 @@ console.log(`⚡ speed=${speed.toFixed(1)}, threshold=${SHAKE_THRESHOLD}`);
     lastY = y;
     lastZ = z;
   }
-}
+};
+
 
 function showGame(game) {
   const overlay = document.getElementById("overlay");
@@ -625,26 +629,21 @@ document.addEventListener("click", (e) => {
 // Only attach devicemotion after permission is granted (for iOS)
 function enableShakeDetection() {
   console.log("🔧 Attempting to enable shake detection...");
-console.log("🟡 enableShakeDetection() called — waiting for permission check...");
-
-  // Always remove any old listeners first
   window.removeEventListener("devicemotion", handleMotion);
-console.log("🟢 devicemotion listener added:", !!handleMotion);
 
-  // ✅ iOS special case
+  // 🔍 Check if iOS with permission requirement
   if (
     typeof DeviceMotionEvent !== "undefined" &&
     typeof DeviceMotionEvent.requestPermission === "function"
   ) {
-    // Must be triggered by user gesture
+    console.log("🍏 iOS detected — requesting motion permission...");
     DeviceMotionEvent.requestPermission()
       .then((response) => {
-        console.log("🟢 DeviceMotionEvent.requestPermission() then() running...");
-
         console.log("📱 Motion permission response:", response);
         if (response === "granted") {
-          console.log("✅ Motion permission granted — shake enabled!");
+          console.log("✅ Permission granted — adding devicemotion listener...");
           window.addEventListener("devicemotion", handleMotion, true);
+          console.log("🟢 Listener attached successfully on iOS!");
         } else {
           alert("⚠️ Du skal give tilladelse til bevægelse for at ryste!");
         }
@@ -653,19 +652,19 @@ console.log("🟢 devicemotion listener added:", !!handleMotion);
         console.error("❌ Motion permission request failed:", err);
       });
   } else {
-    // Android or desktop
-    console.log("🟢 Non-iOS — motion enabled normally");
+    // ✅ Android, desktop, etc.
+    console.log("🤖 Non-iOS device — adding listener directly...");
     window.addEventListener("devicemotion", handleMotion, true);
+    console.log("🟢 Listener attached successfully (non-iOS)!");
   }
 }
+
 
 function closeShakeAndEnableMotion() {
   closeShakePopup();
 
   // Call directly from the button click (user gesture!)
-  setTimeout(() => {
     enableShakeDetection();
-  }, 300);
 }
 
 
