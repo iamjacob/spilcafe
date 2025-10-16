@@ -163,8 +163,10 @@ main::after {
 }
 
 .card__imageHolder {
-    width: 145px;
-    height: 145px;
+    width: 130px;
+    max-width: 145px;
+    height: 130px;
+    max-height: 145px;
     border-radius: 12px;
     background: #E3E3E3;
     display: flex;
@@ -315,6 +317,13 @@ main::after {
     align-items: center;
     color: #fff;
 }
+
+.rating-dices{
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
 
 .overlay .card__rating svg {
     margin-right: 4px;
