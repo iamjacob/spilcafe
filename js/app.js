@@ -573,7 +573,7 @@ window.handleMotion = function handleMotion(e) {
     const speed =
       (Math.abs(x + y + z - lastX - lastY - lastZ) / diffTime) * 10000;
 
-    console.log(`📈 x=${x.toFixed(2)}, y=${y.toFixed(2)}, z=${z.toFixed(2)} ⚡ speed=${speed.toFixed(1)}`);
+    // console.log(`📈 x=${x.toFixed(2)}, y=${y.toFixed(2)}, z=${z.toFixed(2)} ⚡ speed=${speed.toFixed(1)}`);
 
     if (speed > SHAKE_THRESHOLD && curTime - lastShake > COOLDOWN) {
       if (!allGames.length) {
@@ -582,11 +582,11 @@ window.handleMotion = function handleMotion(e) {
       }
 
       lastShake = curTime;
-      console.log("💥 SHAKE DETECTED! speed:", speed);
+      // console.log("💥 SHAKE DETECTED! speed:", speed);
 
       const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
 
-      alert("Shake triggered!"); // quick test
+      // alert("Shake triggered!"); // quick test
       shakeItToTheMax();
       startConfetti();
       displayDrawer(randomGame.id);
@@ -824,35 +824,35 @@ locationDropdown.addEventListener("click", (e) => {
 });
 
 
-(function () {
-  // Create an on-screen log panel
-  const logDiv = document.createElement("div");
-  logDiv.id = "log";
-  logDiv.style.position = "fixed";
-  logDiv.style.bottom = "0";
-  logDiv.style.left = "0";
-  logDiv.style.right = "0";
-  logDiv.style.background = "rgba(0,0,0,0.7)";
-  logDiv.style.color = "lime";
-  logDiv.style.fontSize = "12px";
-  logDiv.style.padding = "5px";
-  logDiv.style.zIndex = "9999";
-  logDiv.style.maxHeight = "30vh";
-  logDiv.style.overflowY = "auto";
-  document.body.appendChild(logDiv);
+// (function () {
+//   // Create an on-screen log panel
+//   const logDiv = document.createElement("div");
+//   logDiv.id = "log";
+//   logDiv.style.position = "fixed";
+//   logDiv.style.bottom = "0";
+//   logDiv.style.left = "0";
+//   logDiv.style.right = "0";
+//   logDiv.style.background = "rgba(0,0,0,0.7)";
+//   logDiv.style.color = "lime";
+//   logDiv.style.fontSize = "12px";
+//   logDiv.style.padding = "5px";
+//   logDiv.style.zIndex = "9999";
+//   logDiv.style.maxHeight = "30vh";
+//   logDiv.style.overflowY = "auto";
+//   document.body.appendChild(logDiv);
 
-  // Keep original console.log
-  const originalLog = console.log;
+//   // Keep original console.log
+//   const originalLog = console.log;
 
-  // Overwrite it
-  console.log = function (...args) {
-    // Log to screen
-    logDiv.innerHTML += args.join(" ") + "<br>";
-    logDiv.scrollTop = logDiv.scrollHeight;
+//   // Overwrite it
+//   console.log = function (...args) {
+//     // Log to screen
+//     logDiv.innerHTML += args.join(" ") + "<br>";
+//     logDiv.scrollTop = logDiv.scrollHeight;
 
-    // Also log to real console (in case you connect Safari DevTools)
-    originalLog.apply(console, args);
-  };
+//     // Also log to real console (in case you connect Safari DevTools)
+//     originalLog.apply(console, args);
+//   };
 
-  console.error = console.warn = console.log; // optional: also capture warnings & errors
-})();
+//   console.error = console.warn = console.log; // optional: also capture warnings & errors
+// })();
