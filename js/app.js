@@ -563,7 +563,8 @@ function handleMotion(e) {
     if (speed > SHAKE_THRESHOLD && curTime - lastShake > COOLDOWN) {
       lastShake = curTime;
       const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
-      showConfetti();
+      // showConfetti();
+      startConfetti()
       shakeItToTheMax();
       displayDrawer(randomGame.id); // Use displayDrawer to show the game
     }
