@@ -127,7 +127,7 @@ h1 {
 /*CARD COMPONENT*/
 main {
     padding: 16px;
-    padding-top: var(--header-height, 220px);
+    padding-top: 240px;
     display: flex;
     width: 100%;
     flex-wrap: wrap;

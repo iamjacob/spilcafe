@@ -82,22 +82,10 @@ function displayGames(games) {
   console.log(`🎬 Viser ${games.length} game`);
 
   for (const game of games) {
-    displayGame(game);
+    displayGame(game)
   }
 
-  // Update main padding-top to match header height after rendering games
-  updateMainPadding();
 }
-// Dynamically update main's padding-top to match header height
-function updateMainPadding() {
-  const header = document.querySelector('header');
-  if (header) {
-    document.documentElement.style.setProperty('--header-height', header.offsetHeight + 'px');
-  }
-}
-
-window.addEventListener('resize', updateMainPadding);
-window.addEventListener('DOMContentLoaded', updateMainPadding);
 
 // #4: Render a single movie card
 function displayGame(game) {
